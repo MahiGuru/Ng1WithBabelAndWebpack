@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+
+</head>
+
+<body ng-controller="MainCtrl as main">
+    <div class="container">
+        <h1>Angular1 with ES2016 And Karma</h1>
+        <div class="row">
+            <button type="submit" class="btn btn-default" ng-click="main.getCustomers()">Get Customers</button>
+        </div>
+        <div class="row">
+            <h3>Add Customer</h3>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label class="sr-only" for="exampleInputEmail3">First Name </label>
+                    <input type="text" ng-model="main.newUser.firstname" class="form-control" id="exampleInputEmail3" placeholder="Firstname">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="exampleInputEmail3">Last Name </label>
+                    <input type="text" ng-model="main.newUser.lastName" class="form-control" id="exampleInputEmail3" placeholder="Lastname">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="exampleInputPassword3">Mobile No</label>
+                    <input type="tel" ng-model="main.newUser.mobileNo" class="form-control" id="exampleInputPassword3" placeholder="Mobile No">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="exampleInputPassword3">Email</label>
+                    <input type="email" ng-model="main.newUser.email" class="form-control" id="exampleInputPassword3" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="exampleInputPassword3">Password</label>
+                    <input type="password" ng-model="main.newUser.password" class="form-control" id="exampleInputPassword3" placeholder="password">
+                </div>
+                <button type="submit" class="btn  btn-primary" ng-hide="main.IsEditable" ng-click="main.addUser(main.newUser)">Add User</button>
+                <button type="submit" class="btn  btn-primary" ng-show="main.IsEditable" ng-click="main.updateUser(main.newUser)">Update User</button>
+            </form>
+        </div>
+        <br />
+        <div class="row">
+            <div class="list-group">
+                <a href="#" class="list-group-item" ng-repeat="customer in main.customers">
+                    <h4 class="list-group-item-heading">{{ customer.firstname }} {{ customer.lastName }}
+                        <span class="pull-right label">
+                            <button type="submit" class="btn btn-warning" ng-click="main.getCustomerById(customer)">Get Details</button>
+                            <button type="submit" class="btn btn-danger"  ng-click="main.removeUser(customer)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                        </span>
+
+                    </h4>
+                    <p class="list-group-item-text">Mobile No : {{ customer.mobileNo }}</p>
+                    <p class="list-group-item-text">Email : {{ customer.email }}</p>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="app.bundle.js"></script>
+
+</body>
+
+</html>
