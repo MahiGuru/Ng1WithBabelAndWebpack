@@ -31,9 +31,8 @@ class MainCtrl {
         });
     }
     addUser(user) {
-        this.userlist.push({
-            name: user.name,
-            age: user.age
+        return this.users.addCustomer(user).then((res) => {
+            console.log("Successfully created");
         });
     }
     getCustomerById(customer) {
@@ -41,6 +40,10 @@ class MainCtrl {
             this.IsEditable = true;
             this.newUser = res.data;
         });
+    }
+    reset() {
+        this.IsEditable = false;
+        this.newUser = new NewCustomer();
     }
     removeUser(customer) {
         return this.users.removeUser(customer.id).then(() => {

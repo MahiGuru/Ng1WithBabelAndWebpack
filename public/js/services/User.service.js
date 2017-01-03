@@ -2,6 +2,9 @@ export default class UserService {
     constructor($http) {
         this.$http = $http;
     }
+    addCustomer(user) {
+        return this.$http({ method: "POST", url: 'http://localhost:2000/api/Customers', data: user })
+    }
     getCustomers() {
         // Example service function
         return this.$http({ method: 'GET', url: 'http://localhost:2000/api/Customers' });

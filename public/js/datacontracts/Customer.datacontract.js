@@ -3,7 +3,7 @@ export default class NewCustomer {
         this.firstname = "";
         this.lastName = "";
         this.mobileNo = "";
-        this.email = " @gmail.com";
+        this.email = "";
         this.password = "";
     }
 }

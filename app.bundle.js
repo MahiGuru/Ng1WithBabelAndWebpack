@@ -50,15 +50,22 @@
 
 	var _Main2 = _interopRequireDefault(_Main);
 
-	var _User = __webpack_require__(2);
+	var _User = __webpack_require__(3);
 
 	var _User2 = _interopRequireDefault(_User);
+
+	var _list = __webpack_require__(4);
+
+	var _list2 = _interopRequireDefault(_list);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var angularModule = angular.module("myApp", []);
 	angularModule.service("UserService", _User2.default);
 
+	angularModule.directive("listDirective", function () {
+	  return new _list2.default();
+	});
 	angularModule.controller("MainCtrl", _Main2.default);
 
 /***/ },
@@ -73,7 +80,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _Customer = __webpack_require__(3);
+	var _Customer = __webpack_require__(2);
 
 	var _Customer2 = _interopRequireDefault(_Customer);
 
@@ -124,9 +131,8 @@
 	    }, {
 	        key: "addUser",
 	        value: function addUser(user) {
-	            this.userlist.push({
-	                name: user.name,
-	                age: user.age
+	            return this.users.addCustomer(user).then(function (res) {
+	                console.log("Successfully created");
 	            });
 	        }
 	    }, {
@@ -138,6 +144,12 @@
 	                _this3.IsEditable = true;
 	                _this3.newUser = res.data;
 	            });
+	        }
+	    }, {
+	        key: "reset",
+	        value: function reset() {
+	            this.IsEditable = false;
+	            this.newUser = new _Customer2.default();
 	        }
 	    }, {
 	        key: "removeUser",
@@ -165,6 +177,30 @@
 /* 2 */
 /***/ function(module, exports) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var NewCustomer = function NewCustomer() {
+	    _classCallCheck(this, NewCustomer);
+
+	    this.firstname = "";
+	    this.lastName = "";
+	    this.mobileNo = "";
+	    this.email = "";
+	    this.password = "";
+	};
+
+	exports.default = NewCustomer;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -183,6 +219,11 @@
 	    }
 
 	    _createClass(UserService, [{
+	        key: 'addCustomer',
+	        value: function addCustomer(user) {
+	            return this.$http({ method: "POST", url: 'http://localhost:2000/api/Customers', data: user });
+	        }
+	    }, {
 	        key: 'getCustomers',
 	        value: function getCustomers() {
 	            // Example service function
@@ -213,7 +254,7 @@
 	UserService.$inject = ['$http'];
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -222,19 +263,46 @@
 	    value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var NewCustomer = function NewCustomer() {
-	    _classCallCheck(this, NewCustomer);
+	var listDirective = function () {
+	    function listDirective() {
+	        _classCallCheck(this, listDirective);
 
-	    this.firstname = "";
-	    this.lastName = "";
-	    this.mobileNo = "";
-	    this.email = " @gmail.com";
-	    this.password = "";
+	        this.restrict = "EA";
+	        this.scope = {
+	            data: "=",
+	            isEditable: "=",
+	            addUser: "&",
+	            updateUser: "&"
+	        };
+	        this.templateUrl = "./public/html/AddUser.html";
+
+	        //this.controller = ListDirectiveController;
+	        //this.controllerAs = 'ctrl';
+	        //this.bindToController = true;
+	    }
+
+	    _createClass(listDirective, [{
+	        key: "compile",
+	        value: function compile() {}
+	    }, {
+	        key: "link",
+	        value: function link() {}
+	    }]);
+
+	    return listDirective;
+	}();
+
+	exports.default = listDirective;
+
+	var ListDirectiveController = function ListDirectiveController() {
+	    _classCallCheck(this, ListDirectiveController);
+
+	    this.name = "Mahipal";
 	};
-
-	exports.default = NewCustomer;
 
 /***/ }
 /******/ ]);
